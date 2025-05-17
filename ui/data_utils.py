@@ -29,5 +29,12 @@ def feature_engineering(data):
     data['MACD'] = exp1 - exp2
     data['Volume_Norm'] = (data['Volume'] - data['Volume'].rolling(20).mean()) / data['Volume'].rolling(20).std()
     data['Return_Class'] = data['Return'].apply(discretize_return)
-    data.dropna(inplace=True)
+    data = data.dropna()
+    # Ensure index is datetime for all downstream use
+    if not pd.api.types.is_datetime64_any_dtype(data.index):
+        if 'Date' in data.columns:
+            data['Date'] = pd.to_datetime(data['Date'])
+            data = data.set_index('Date')
+        else:
+            data.index = pd.to_datetime(data.index)
     return data
