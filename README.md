@@ -38,7 +38,7 @@ Ce projet met en œuvre un **agent de trading automatique** basé sur **Q-Learni
 ![Test Backtest](img/pic4.png)
 
 ### animation
-![Trading Animation ](img/trading_animation.mp4)
+![Trading Animation](img/trading_animation.mp4)
 
 
 ### Q-table (top 10 états)
