@@ -1,73 +1,64 @@
-﻿# Agent de Trading Automatique - Q-Learning
+﻿# Agent de Trading Automatique Basé sur le Q-Learning
 
-Ce projet met en œuvre un **agent de trading automatique** basé sur **Q-Learning** pour apprendre des stratégies d'achat et de vente sur des données boursières historiques (Apple - AAPL). Il offre une interface utilisateur intuitive via **Streamlit** pour le paramétrage, l'entraînement, le test et la visualisation de la Q-table.
+Ce projet présente la conception, l'entraînement et l'évaluation d'un agent de trading automatique utilisant l'algorithme d'apprentissage par renforcement **Q-Learning**. L'agent est entraîné pour prendre des décisions d'achat, de vente ou de conservation sur des actions (par défaut, Apple Inc. - AAPL) en se basant sur des indicateurs techniques dérivés des données historiques du marché.
 
-## Fonctionnalités
+Le projet est divisé en trois composantes principales :
+1.  **Prétraitement des Données** : Un pipeline complet pour collecter, nettoyer et enrichir les données boursières.
+2.  **Entraînement de l'Agent** : L'implémentation et l'entraînement de l'agent Q-Learning.
+3.  **Interface Utilisateur Interactive** : Une application web développée avec Streamlit pour visualiser et interagir avec l'agent.
 
-### 1. Chargement des Données
-- Extraction des données historiques de l'action **Apple (AAPL)** via Yahoo Finance.
-- Définir les dates de début et de fin.
-- Option pour activer le **mode rapide** (300 jours de données, 10 épisodes max).
+## 🚀 Fonctionnalités
 
-### 2. Entraînement Q-Learning
-- Nombre d’épisodes personnalisable (entre 10 et 500).
-- Affichage du **profit total** par épisode.
-- Q-Learning avec une Q-table construite dynamiquement selon les états-actions.
+- **Collecte de Données Dynamique** : Récupère les données boursières historiques directement depuis Yahoo Finance.
+- **Feature Engineering** : Calcule plusieurs indicateurs techniques pour enrichir l'état de l'environnement :
+    - Moyennes Mobiles (MA)
+    - Relative Strength Index (RSI)
+    - Bandes de Bollinger
+    - MACD (Moving Average Convergence Divergence)
+    - Volume Normalisé
+- **Agent Q-Learning Tabulaire** : Un agent simple et efficace qui apprend une politique de trading optimale en explorant un environnement simulé.
+- **Backtesting** : Évalue les performances de l'agent sur des données non vues (out-of-sample) pour mesurer sa rentabilité et sa robustesse.
+- **Interface Interactive** : Une application Streamlit permet de :
+    - Choisir n'importe quel ticker d'action disponible sur Yahoo Finance.
+    - Sélectionner une plage de dates pour l'entraînement et le test.
+    - Lancer l'entraînement en direct et suivre la progression.
+    - Visualiser les performances via des graphiques interactifs (profits, signaux d'achat/vente).
+    - Animer les décisions de l'agent jour par jour sur le graphique des prix.
 
-### 3. Test de l'Agent
-- Évaluation sur des données test.
-- Affichage du **Profit**, **Sharpe Ratio**, **Max Drawdown**.
-- Visualisation claire des signaux **Buy/Sell** sur le graphique des prix.
+## 🛠️ Structure du Projet
 
-### 4. Q-Table
-- Affichage des 10 meilleurs états (selon la valeur Q maximale).
-- Vue tabulaire des actions : **Hold**, **Buy**, **Sell**.
+- `Pretraitement_Donnees_AAPL.ipynb` : Notebook Jupyter détaillant les étapes de scraping, nettoyage et analyse exploratoire des données.
+- `Q-Learning_Trading_AAPL.ipynb` : Notebook Jupyter pour l'entraînement et l'évaluation de l'agent Q-Learning.
+- `data/` : Contient les fichiers CSV générés (données brutes, nettoyées et normalisées).
+- `ui/` : Répertoire contenant l'application Streamlit.
+    - `app.py` : Le script principal de l'application Streamlit.
+    - `agent.py` : La classe `QLearningAgent`.
+    - `environment.py` : La classe `TradingEnvironment` qui simule le marché.
+    - `data_utils.py` : Fonctions pour le calcul des indicateurs techniques.
+- `img/` : Contient des images et des captures d'écran du projet.
 
----
+## 🔧 Comment l'utiliser
 
-## Aperçu de l’Interface
+1.  **Clonez le dépôt :**
+    ```bash
+    git clone https://github.com/Alae-Eddine-Akesbi/Automatic-Trading-Agent.git
+    cd Automatic-Trading-Agent
+    ```
 
-### Chargement des données
-![Chargement des données](img/pic1.png)
+2.  **Installez les dépendances :**
+    ```bash
+    pip install -r requirements.txt
+    ```
+    *(Note : Un fichier `requirements.txt` serait à créer pour lister les dépendances comme pandas, numpy, streamlit, yfinance, plotly, etc.)*
 
-### Entraînement Q-Learning
-![Entraînement](img/pic2.png)
+3.  **Lancez l'application Streamlit :**
+    ```bash
+    streamlit run ui/app.py
+    ```
 
-### Backtest sur données test
-![Test Backtest](img/pic3.png)
-![Test Backtest](img/pic4.png)
+4.  Ouvrez votre navigateur à l'adresse locale fournie (généralement `http://localhost:8501`).
 
-### animation
-![Trading Animation](img/trading_animation.mp4)
-
-
-### Q-table (top 10 états)
-![Q-table](img/pic5.png)
-
----
-
-## Installation et Lancement
-
-### Prérequis
-
-- Python 3.8+
-- [Streamlit](https://streamlit.io/)
-- `yfinance`, `pandas`, `numpy`, `matplotlib`
-
-### Installation
-
-```bash
-git clone https://github.com/votre-utilisateur/agent-trading-qlearning.git
-cd agent-trading-qlearning
-```
-### Étapes pour exécuter l’interface
-
-
-```bash
-cd ui/
-
-streamlit run app.py
-```
+5.  Utilisez la barre latérale pour configurer les paramètres (ticker, dates) et lancez l'entraînement !
 
 ## Auteurs
 
